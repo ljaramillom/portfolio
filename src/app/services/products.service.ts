@@ -24,4 +24,8 @@ export class ProductsService {
       });
    }
 
+   public getProduct(id:string){
+    return this.http.get(`https://curriculum-vitae-51728.firebaseio.com/products/${id}.json`)
+  }
+
 }
