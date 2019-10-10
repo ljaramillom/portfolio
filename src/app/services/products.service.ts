@@ -7,25 +7,56 @@ import { Product } from '../interfaces/product.interface';
 })
 export class ProductsService {
 
-  download_products = true;
+  download = true;
   products: Product[] = [];
+  productsFilter: Product[] = [];
 
-  constructor(private http:HttpClient) {
-    this.getProducts();
-   }
+  constructor(private http: HttpClient) {
+    this.getAllProducts();
+  }
 
-   private getProducts(){
-     this.http.get('https://curriculum-vitae-51728.firebaseio.com/products_idx.json')
-      .subscribe((resp:Product[]) => {
+  private getAllProducts() {
+
+    return new Promise((resolve, reject) => {
+
+      this.http.get('https://curriculum-vitae-51728.firebaseio.com/products_idx.json')
+      .subscribe((resp: Product[]) => {
         this.products = resp;
-        setTimeout(() => {
-          this.download_products = false;
-        }, 2000);
+        this.download = false;
+        resolve();
       });
-   }
+    });
+  }
 
-   public getProduct(id:string){
+  public getProduct(id: string) {
     return this.http.get(`https://curriculum-vitae-51728.firebaseio.com/products/${id}.json`)
+  }
+
+  searchProduct(value: string) {
+
+    if(this.products.length === 0){
+      //download products
+      this.getAllProducts().then(()=>{
+        //next get products
+        //add filter
+        this.filterProducts(value);
+      });
+    } else {
+      //add filter
+      this.filterProducts(value);
+    }
+  }
+
+  private filterProducts(value:string){
+    this.productsFilter = [];
+    value = value.toLocaleLowerCase();
+    this.products.forEach(prod => {
+      const titleLower = prod.titulo.toLocaleLowerCase();
+
+      if ( prod.categoria.indexOf( value ) >= 0 || titleLower.indexOf( value ) >= 0  ) {
+        this.productsFilter.push( prod );
+      }
+    });
   }
 
 }

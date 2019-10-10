@@ -1,4 +1,4 @@
-<header *ngIf="info" class="ae-container-fluid ae-container-fluid--full rk-header ">
+<header class="ae-container-fluid ae-container-fluid--full rk-header ">
   <input type="checkbox" id="mobile-menu" class="rk-mobile-menu">
   <label for="mobile-menu">
     <svg>
@@ -24,14 +24,20 @@
         <li routerLinkActive="active" class="rk-menu__item"><a routerLink="about" class="rk-menu__link">About</a>
         </li>
       </ul>
-      <form class="rk-search">
-        <input type="text" placeholder="Search" id="urku-search" class="rk-search-field">
+      
+      <div class="rk-search">
+         <input type="text" 
+                (keyup.enter)="searchProduct(txtSearch.value)"
+                placeholder="Search..." 
+                id="urku-search" 
+                class="rk-search-field"
+                #txtSearch>
         <label for="urku-search">
           <svg>
             <use xlink:href="assets/img/symbols.svg#icon-search"></use>
           </svg>
         </label>
-      </form>
+      </div>
     </nav>
   </div>
 </header>

@@ -2,7 +2,7 @@
 
 
   <!-- loading -->
-  <div align="center" *ngIf="_productsService.download_products">
+  <div align="center" *ngIf="_productsService.download">
     <h2>Loading...</h2>
     <div class="loader loader--style1" title="0">
       <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -21,13 +21,7 @@
     </div>
   </div>
 
-
-
-
-
-
   <div class="ae-masonry ae-masonry-md-2 ae-masonry-xl-4">
-
     <a *ngFor="let product of _productsService.products" [routerLink]="['/item', product.cod]"
       class="animated fadeIn rk-item ae-masonry__item">
       <img src="assets/products/{{product.url}}.jpg" alt="">
@@ -36,6 +30,5 @@
         <p>{{product.categoria}}</p>
       </div>
     </a>
-
   </div>
 </section>
